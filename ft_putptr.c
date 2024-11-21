@@ -1,21 +1,25 @@
 #include "ft_printf.h"
 
-int ft_putptr(unsigned long nb)
+int ft_putptr(void *ptr)
 {
- int   re;
- char  *base;
+    int printed;
 
- re = 0;
- base = "0123456789abcdef";
- if (nb >= 16)
- {
-    re += ft_putptr(nb / 16);
-    re += ft_putptr(nb % 16);
- }
- else
-    re += ft_putchar(base[nb % 16]);
- return (re);
+    if (ptr == NULL)
+    {
+        // Imprime `(nil)` quando o ponteiro é NULL
+        return (ft_putstr("(nil)"));
+    }
+    
+    // Imprime "0x" para um ponteiro válido
+    printed = ft_putstr("0x");
+
+    // Chama `ft_puthex` para imprimir o valor hexadecimal do ponteiro
+    // Usa unsigned long para garantir a precisão
+    printed += ft_puthex((unsigned long)ptr, 'x');
+
+    return (printed);
 }
+
 /*
 int ft_putptr(void *ptr)
 {
@@ -23,71 +27,13 @@ int ft_putptr(void *ptr)
     int printed;
 
     printed = 0;
+    if (ptr == NULL)
+    {
+        return (ft_putstr("(nil)"));
+    }
     addr = (unsigned long long)ptr;
     printed += ft_putstr("0x");
-    if (addr == 0)
-    {
-        printed += ft_putchar('0');
-    }
-    else
-    {
-        char buffer[16];
-        int i = 0;
-
-        while (addr)
-        {
-            buffer[i++] = "0123456789abcdef"[addr % 16];
-            addr /= 16;
-        }
-
-        while (i > 0)
-            printed += ft_putchar(buffer[--i]);
-    }
-    return (printed);
-}
-
-int ft_putptr(void *ptr)
-{
-    unsigned long addr;
-    int printed;
-
-    printed = 0;
-    addr = (unsigned long)ptr;
-    printed += ft_putstr("0x");
-    if (addr == 0)
-        printed += ft_putchar('0');
-    else
-    {
-        printed += ft_puthex(addr, 'x');
-    }
-    return (printed);
-}
-
-
-int ft_putptr(void *ptr)
-{
-    unsigned long long addr;
-    int printed;
-
-    printed = 0;
-    addr = (unsigned long long)ptr;
-    printed += ft_putstr("0x");
-    if (addr == 0)
-        printed += ft_putchar('0');
-    else
-    {
-        char buffer[16];
-        int i = 15;
-
-        while (addr != 0)
-        {
-            buffer[i--] = "0123456789abcdef"[addr % 16];
-            addr /= 16;
-        }
-
-        while (++i < 16)
-            printed += ft_putchar(buffer[i]);
-    }
+    printed += ft_puthex(addr, 'x');
     return (printed);
 }
 */
