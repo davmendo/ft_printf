@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: davmendo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/21 18:13:28 by davmendo          #+#    #+#             */
+/*   Updated: 2024/11/21 18:14:13 by davmendo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int ft_putstr(char *s)
+int	ft_putstr(char *s)
 {
-    int i;
+	int	i;
 
-    if (!s)
-        return (ft_putstr("(null)"));
-    i = 0;
-    while (s[i])
-    {
-        ft_putchar(s[i]);
-        i++;
-    }
-    return (i);
+	if (!s)
+		return (ft_putstr("(null)"));
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+	return (i);
 }
