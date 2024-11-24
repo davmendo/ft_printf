@@ -34,29 +34,10 @@ static int	handle_format(char format, va_list args)
 	return (printed);
 }
 
-static int	handle_space_flag(const char *format, int *i, va_list args)
+static int	is_especifier(char c)
 {
-	int	printed;
-	int	num;
-
-	printed = 0;
-	while (format[*i] == ' ')
-		(*i)++;
-	if (format[*i] == 'd' || format[*i] == 'i')
-	{
-		num = va_arg(args, int);
-		if (num >= 0)
-			printed += ft_putchar(' ');
-		printed += ft_putnbr(num);
-	}
-	else if (format[*i] == 'p')
-	{
-		printed += ft_putchar(' ');
-		printed += ft_putptr(va_arg(args, void *));
-	}
-	else
-		printed += handle_format(format[*i], args);
-	return (printed);
+	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
+		|| c == 'u' || c == 'x' || c == 'X' || c == '%');
 }
 
 int	ft_printf(const char *format, ...)
@@ -70,13 +51,10 @@ int	ft_printf(const char *format, ...)
 	i = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%' && format[i + 1] && is_especifier(format[i + 1]))
 		{
 			i++;
-			if (format[i] == ' ')
-				printed += handle_space_flag(format, &i, args);
-			else
-				printed += handle_format(format[i], args);
+			printed += handle_format(format[i], args);
 		}
 		else
 			printed += ft_putchar(format[i]);
@@ -84,4 +62,24 @@ int	ft_printf(const char *format, ...)
 	}
 	va_end(args);
 	return (printed);
+}
+
+int	main(void)
+{
+	int	num = 5;
+	int	number = -5;
+	char	c = 'm';
+	char	*name = NULL;
+	int	res;
+	
+	
+	res = ft_printf("mine%e: %d, %d, %c, %s\n", num, number, c, name);
+	printf("\n");
+	printf("%d", res);
+	printf("\n");
+	res = printf("orig%e: %d, %d, %c, %s\n", num, number, c, name);
+	printf("\n");
+	printf("%d", res);
+	return (0);
+
 }
