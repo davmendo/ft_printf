@@ -63,23 +63,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (printed);
 }
-
-int	main(void)
-{
-	int	num = 5;
-	int	number = -5;
-	char	c = 'm';
-	char	*name = NULL;
-	int	res;
-	
-	
-	res = ft_printf("mine%e: %d, %d, %c, %s\n", num, number, c, name);
-	printf("\n");
-	printf("%d", res);
-	printf("\n");
-	res = printf("orig%e: %d, %d, %c, %s\n", num, number, c, name);
-	printf("\n");
-	printf("%d", res);
-	return (0);
-
-}
